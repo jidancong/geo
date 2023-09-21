@@ -30,7 +30,7 @@ func (c *CreateIndexUseCase) Create() {
 			return nil
 		}
 
-		// 验证ip
+		// 验证IP
 		if ok := isIpV4(ip); !ok {
 			log.Println("IP address validation failed")
 			return nil

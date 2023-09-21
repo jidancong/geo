@@ -1,11 +1,11 @@
 kafka:
-  host: "kafka1:9093"
+  host: "kafka:9093"
   topic: "nginx-log"
   groupId: "1"
   numPartitions: 3
   replication: -1 
 es:
-  host: http://es:9200
+  host: http://192.168.1.1:9200
   preName: logstash-
 
 chunzhen:

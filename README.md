@@ -3,19 +3,18 @@
 
 ## Flow
 ```text
-                                                                 +------------------------+
-                         +--------+                              |                        |
-+-----------+            |        |          +----------+        |                        |
-|fluent-bit |------- --->| kafka  |<---------|  golang  |------->|     elasticsearch      |
-+-----------+            |        |          +----------+        |                        |
-                         +--------+                              |                        |
-                                                                 +------------------------+
+                                                                +------------------------+
+                        +--------+                              |                        |
++-----------+           |        |          +----------+        |                        |
+|fluent-bit |---------->| kafka  |<---------|  golang  |------->|     elasticsearch      |
++-----------+           |        |          +----------+        |                        |
+                        +--------+                              |                        |
+                                                                +------------------------+
 ```
 
 ## 入门开始
 
-
-### nginx日志输出配置
+### Nginx日志输出配置
 ```nginx
 http {
         # Logging Settings
@@ -44,13 +43,31 @@ http {
 }
 ```
 
+### Fluent-bit配置
+```ini
+[INPUT]
+    name              tail
+    path              /var/log/nginx/*.log
+    DB                /fluent-bit/etc/fluent-bit.db
+    Mem_Buf_Limit     5MB
+    Skip_Long_Lines   On
+    Refresh_Interval  10
+    Parser            json
+
+[OUTPUT]
+    Name        kafka
+    Match       *
+    Brokers     192.168.52.172:9092
+    Topics      nginx-log
+```
+
 ### 安装和运行
 
 ```bash
 ./geo
 ```
 
-### 配置说明
+#### 配置说明
 
 ```yaml
 kafka:
